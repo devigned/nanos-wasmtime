@@ -17,6 +17,9 @@ jobs:
       - name: install ops
         run: |
           curl https://ops.city/get.sh -sSfL | sh
+      - name: ops missing files
+        run: |
+          ops run --missing-files $HOME/.wasmtime/bin/wasmtime
       - name: ldd wasmtime
         run: |
           ls -la $HOME/.wasmtime
