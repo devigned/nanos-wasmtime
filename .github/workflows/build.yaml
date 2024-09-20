@@ -1,0 +1,22 @@
+name: build
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  ops:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: install wasmtime
+        run: |
+          curl https://wasmtime.dev/install.sh -sSf | bash
+      - name: install ops
+        run: |
+          curl https://ops.city/get.sh -sSfL | sh
+      - name: ldd wasmtime
+        run: |
+          ldd $(which wasmtime)
