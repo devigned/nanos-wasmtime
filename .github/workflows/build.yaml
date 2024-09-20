@@ -14,14 +14,15 @@ jobs:
       - name: install wasmtime
         run: |
           curl https://wasmtime.dev/install.sh -sSf | bash
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
       - name: install ops
         run: |
           curl https://ops.city/get.sh -sSfL | sh
+          echo "$HOME/.ops/bin" >> $GITHUB_PATH
+          echo "OPS_DIR="$HOME/.ops" >> $GITHUB_ENV
       - name: ops missing files
         run: |
-          ops run --missing-files $HOME/.wasmtime/bin/wasmtime
+          ops run --missing-files wasmtime
       - name: ldd wasmtime
         run: |
-          ls -la $HOME/.wasmtime
-          ls -la $HOME/.wasmtime/bin
-          ldd $(which $HOME/.wasmtime/bin/wasmtime)
+          ldd $(which wasmtime)
