@@ -19,4 +19,6 @@ jobs:
           curl https://ops.city/get.sh -sSfL | sh
       - name: ldd wasmtime
         run: |
-          ldd $(which $HOME/.wasmtime/wasmtime)
+          ls -la $HOME/.wasmtime
+          ls -la $HOME/.wasmtime/bin
+          ldd $(which $HOME/.wasmtime/bin/wasmtime)
