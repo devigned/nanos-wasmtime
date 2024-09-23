@@ -11,18 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: install wasmtime
+      - name: docker build wasmtime image
         run: |
-          curl https://wasmtime.dev/install.sh -sSf | bash
-          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH
+          docker build -t wasmtime .
       - name: install ops
         run: |
           curl https://ops.city/get.sh -sSfL | sh
           echo "$HOME/.ops/bin" >> $GITHUB_PATH
           echo "OPS_DIR=$HOME/.ops" >> $GITHUB_ENV
-      - name: ops missing files
+      - name: ops pkg from-docker
         run: |
-          ops run --missing-files wasmtime
-      - name: ldd wasmtime
+          ops pkg from-docker wasmtime -n wasmtime --file wasmtime
+      - name: ops pkg load
         run: |
-          ldd $(which wasmtime)
+          ops pkg load --local wasmtime
