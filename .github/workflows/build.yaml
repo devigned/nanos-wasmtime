@@ -21,7 +21,7 @@ jobs:
           echo "OPS_DIR=$HOME/.ops" >> $GITHUB_ENV
       - name: ops pkg from-docker
         run: |
-          ops pkg from-docker wasmtime -n wasmtime --file wasmtime
+          ops pkg from-docker wasmtime --file wasmtime
       - name: ops pkg load
         run: |
           ops pkg load --local wasmtime
