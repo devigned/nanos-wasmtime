@@ -1,0 +1,27 @@
+name: build
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  ops:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: docker build wasmtime image
+        run: |
+          docker build -t wasmtime .
+      - name: install ops
+        run: |
+          curl https://ops.city/get.sh -sSfL | sh
+          echo "$HOME/.ops/bin" >> $GITHUB_PATH
+          echo "OPS_DIR=$HOME/.ops" >> $GITHUB_ENV
+      - name: ops pkg from-docker
+        run: |
+          ops pkg from-docker wasmtime --file wasmtime --show-debug --show-errors --show-warnings
+      - name: ops pkg load
+        run: |
+          ops pkg load --local wasmtime
