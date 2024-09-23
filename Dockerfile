@@ -1,6 +1,6 @@
 FROM debian
 
-RUN apt-get update && apt-get install -y curl && \
+RUN apt-get update && apt-get install -y curl xz-utils && \
     curl https://wasmtime.dev/install.sh -sSf | bash
 
 RUN cp $HOME/.wasmtime/bin/wasmtime /wasmtime
